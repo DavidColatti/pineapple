@@ -22,8 +22,8 @@ export class TableComponent implements OnInit {
   private setupTable(): void {
     this.deviceService.getAll().subscribe((data: DeviceTable) => {
       this.deviceTable = data;
-      // assigning data rows to the filteredDeviceTableRows so we don't mutate
-      // the original table data rows when filtering.
+      // assigning data rows to the filteredDeviceTableRows so we can keep a
+      // reference of all the rows unfiltered.
       this.filteredDeviceTableRows = data.rows;
     });
   }
