@@ -15,44 +15,35 @@ describe('TableComponent', () => {
       device_category: 'Wand',
       group: 'Unicorn Hair',
       model: 'Ash',
-      person: 'Cedric Diggory'
+      person: 'Cedric Diggory',
     },
     {
       device_category: 'Wand',
       group: 'Pheonix Feather',
       model: 'Holly',
-      person: 'Harry Potter'
+      person: 'Harry Potter',
     },
     {
       device_category: 'Wand',
       group: 'Thestral Hair',
       model: 'Elder wood',
-      person: 'Albus Dumbledore'
-    }
+      person: 'Albus Dumbledore',
+    },
   ];
 
   const devicesTableFixture: DeviceTable = {
     collection_entries: devicesFixture.length,
-    headers: [
-      'model',
-      'group',
-      'device_category',
-      'person'
-    ],
+    headers: ['model', 'group', 'device_category', 'person'],
     id: 'devices',
     rows: devicesFixture,
-    title: 'Devices'
+    title: 'Devices',
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableComponent ],
-      imports: [
-        DemoMaterialModule,
-        HttpClientTestingModule
-      ]
-    })
-    .compileComponents();
+      declarations: [TableComponent],
+      imports: [DemoMaterialModule, HttpClientTestingModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

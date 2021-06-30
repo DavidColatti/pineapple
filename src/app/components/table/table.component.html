@@ -1,13 +1,26 @@
 <div class="device-table" *ngIf="deviceTable">
+  <div class="device-table__title">
+    <caption class="device-table__caption">
+      {{
+        deviceTable.title
+      }}
+    </caption>
+    <input
+      type="text"
+      (input)="filterTable()"
+      placeholder="Search..."
+      [(ngModel)]="searchInput"
+      class="device-table__search-input"
+    />
+  </div>
   <table class="device-table__table">
-    <caption class="device-table__caption">{{ deviceTable.title }}</caption>
     <thead>
       <th *ngFor="let header of deviceTable.headers" class="device-table__th">
         {{ header | titlecase }}
       </th>
     </thead>
     <tbody>
-      <tr *ngFor="let row of deviceTable.rows">
+      <tr *ngFor="let row of filteredDeviceTableData">
         <td *ngFor="let column of deviceTable.headers">
           {{ row[column] }}
         </td>
