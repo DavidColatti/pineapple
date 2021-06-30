@@ -20,7 +20,7 @@
       </th>
     </thead>
     <tbody>
-      <tr *ngFor="let row of filteredDeviceTableData">
+      <tr *ngFor="let row of filteredDeviceTableRows">
         <td *ngFor="let column of deviceTable.headers">
           {{ row[column] }}
         </td>

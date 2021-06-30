@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DeviceTable } from 'src/app/models/device-table.model';
 import { Device } from 'src/app/models/device.model';
 import { DemoMaterialModule } from 'src/app/modules/material.module';
+import { DeviceService } from 'src/app/services/device.service';
+import { of } from 'rxjs';
 
 import { TableComponent } from './table.component';
 
@@ -43,6 +45,7 @@ describe('TableComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TableComponent],
       imports: [DemoMaterialModule, HttpClientTestingModule],
+      providers: [DeviceService],
     }).compileComponents();
   }));
 
@@ -56,7 +59,24 @@ describe('TableComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should call filterTable and filter the rows properly', () => {
+    component.searchInput = 'Elder wood';
+    component.deviceTable = devicesTableFixture;
+
+    component.filterTable();
+
+    expect(component.filteredDeviceTableRows.length).toBe(1);
+  });
+
   describe('ngOnInit', () => {
+    beforeEach(() => {
+      const deviceService = fixture.debugElement.injector.get(DeviceService);
+
+      spyOn(deviceService, 'getAll').and.callFake((): any => {
+        return of(devicesTableFixture);
+      });
+    });
+
     it('should set deviceTable to response from service', () => {
       component.deviceTable = null;
 

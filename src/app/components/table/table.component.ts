@@ -10,7 +10,7 @@ import { DeviceService } from 'src/app/services/device.service';
 })
 export class TableComponent implements OnInit {
   deviceTable: DeviceTable;
-  filteredDeviceTableData: Device[];
+  filteredDeviceTableRows: Device[];
   searchInput: string;
 
   constructor(private deviceService: DeviceService) {}
@@ -22,18 +22,24 @@ export class TableComponent implements OnInit {
   private setupTable(): void {
     this.deviceService.getAll().subscribe((data: DeviceTable) => {
       this.deviceTable = data;
-      this.filteredDeviceTableData = data.rows;
+      // assigning data rows to the filteredDeviceTableRows so we don't mutate
+      // the original table data rows when filtering.
+      this.filteredDeviceTableRows = data.rows;
     });
   }
 
   filterTable(): void {
-    const filteredTableData = this.deviceTable.rows.filter((row) => {
-      const concatenatedRowValues = Object.values(row).join('');
-      return concatenatedRowValues
-        .toLowerCase()
-        .includes(this.searchInput.toLowerCase());
-    });
+    if (this.searchInput.length > 0) {
+      const filteredTableRows = this.deviceTable.rows.filter((row) => {
+        const concatenatedRowValues = Object.values(row).join('');
+        return concatenatedRowValues
+          .toLowerCase()
+          .includes(this.searchInput.toLowerCase());
+      });
 
-    this.filteredDeviceTableData = filteredTableData;
+      this.filteredDeviceTableRows = filteredTableRows;
+    } else {
+      this.filteredDeviceTableRows = this.deviceTable.rows;
+    }
   }
 }
